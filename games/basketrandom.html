@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galaxy Hub</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/game.css" />
     <link rel="icon" type="image/x-icon" id="favicon" href="/assets/galaxyhubanimated.gif" />
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
@@ -59,14 +59,31 @@
 
     <div class="container">
         <div class="main-box">
-            <h1 class="cooler-title">Tools</h1>
-            <h3 class="sub">other things i guess idk</h3>
-            <button class="cooler-button" onclick="location.href='/tools/ytb.html'">Youtube Bypasser</button>
-            <br />
-            <button class="cooler-button">Spotify Player</button>
+            <div class="game-frame">
+                <iframe id="game-iframe" src="https://basket-random-game.github.io/file/" frameborder="0"></iframe>
+
+                <div class="game-info">
+                    <span class="game-name">Basket Random</span>
+                    <button class="fullscreen-btn" onclick="fullscreenGame()">⛶ Fullscreen</button>
+                </div>
+            </div>
         </div>
-        <script src="/particles-js.js"></script>
-        <script src="config.js"></script>
+    </div>
+
+
+    <script src="/particles-js.js"></script>
+    <script>
+        function fullscreenGame() {
+            const iframe = document.getElementById("game-iframe");
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+    </script>
 </body>
 
 </html>
