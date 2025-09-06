@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galaxy Hub</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/game.css" />
     <link rel="icon" type="image/x-icon" id="favicon" href="/assets/galaxyhubanimated.gif" />
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
@@ -59,14 +59,59 @@
 
     <div class="container">
         <div class="main-box">
-            <h1 class="title">Tools</h1>
-            <h3 class="sub">other things i guess idk</h3>
-            <button class="cooler-button" onclick="location.href='/tools/ytb.html'">Youtube Bypasser</button>
-            <br />
-            <button class="cooler-button">Spotify Player</button>
+            <!-- Button to prompt user for Spotify link -->
+            <button class="cooler-button" id="ready" onclick="loadSpotify()">Click when Ready</button>
+
+            <!-- Spotify player container -->
+            <div class="spotify-container" style="margin-top: 1rem;">
+                <iframe id="spotify-player" src="" width="100%" height="380" frameborder="0" allowtransparency="true"
+                    allow="encrypted-media">
+                </iframe>
+            </div>
         </div>
-        <script src="/particles-js.js"></script>
-        <script src="config.js"></script>
+    </div>
+
+    <script src="/particles-js.js"></script>
+    <script>
+        function say() {
+            alert("HOW TO USE:\n get a spotify playlist link and when you got it hit the button and paste it in, the button will dissapear and you will be able to play the playlist");
+        }
+        function loadSpotify() {
+            // Prompt user for Spotify track or playlist link
+            let url = prompt("Enter a Spotify song or playlist link:");
+
+            if (!url) return;
+
+            let embedURL = "";
+
+            try {
+                let parsed = new URL(url);
+                if (parsed.hostname.includes("open.spotify.com")) {
+                    // Extract type (track/playlist/album) and ID
+                    let parts = parsed.pathname.split('/');
+                    let type = parts[1]; // e.g., "track" or "playlist"
+                    let id = parts[2].split('?')[0]; // Remove query parameters
+                    embedURL = `https://open.spotify.com/embed/${type}/${id}`;
+                }
+            } catch {
+                alert("Invalid Spotify URL");
+                return;
+            }
+
+            if (embedURL) {
+                // Set iframe src to Spotify embed
+                document.getElementById("spotify-player").src = embedURL;
+                // Hide the button after input
+                document.getElementById("ready").style.display = "none";
+            } else {
+                alert("Invalid Spotify link. Make sure it's a full track or playlist URL.");
+            }
+        }
+
+
+
+        window.onload = say;
+    </script>
 </body>
 
 </html>
